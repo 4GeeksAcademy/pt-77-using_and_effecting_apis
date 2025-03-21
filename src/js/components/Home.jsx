@@ -1,26 +1,31 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
+	const [pokemon, setPokemon] = useState([])
+	// I want find a api to demo
+	// I want demo useEffect 
+	// and I guess we will display information that api
+	// and make pages to display pokemone information using each pokemons url
+	
+	useEffect(() => {
+		async function getPokemon() {
+			let response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100&offset=0")
+			let data = await response.json()
+			setPokemon(data.results)
+		}
+		getPokemon()
+	}, [])
+	console.log(pokemon)
+
 	return (
 		<div className="text-center">
-            
-
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+			{pokemon.map((eachPokemon, index)=>{
+				return (
+					<h1>{eachPokemon.name}</h1>
+				)
+			})}
 		</div>
 	);
 };
